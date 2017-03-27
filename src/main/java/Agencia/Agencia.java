@@ -7,10 +7,10 @@ public class Agencia {
 	
 	Scanner input = new Scanner(System.in);
 	
-	protected String nome;
-	protected int codigo;
-	protected String endereco;
-	protected String gerente;
+	String nome;
+	int codigo;
+	String endereco;
+	String gerente;
 	
 	Agencia agencia = new Agencia();
 	

@@ -1,19 +1,23 @@
 package Conection;
 
+
+import java.awt.List;
+
 import Agencia.Agencia;
 
 public interface AgenciaDao {
 	
-	Agencia cadastrarAgencia (String nome, String sobrenome);
+	Agencia cadastrarAgencia (Agencia agencia) throws Exception;
 	
 	Agencia encontrarPeloNome (String nome);
 	
 	Agencia encontrarPeloCodigo (int codigo);
 	
-	Agencia atualizarAgencia (Agencia agencia);
+	Agencia atualizarAgencia (int tBusca);
 	
-	//List<Cliente> listarTodos();
+	Agencia removerAgencia (Agencia agencia);
 	
-	boolean removerAgencia (Agencia agencia);
+	List listarTods();
+	
 
 }
