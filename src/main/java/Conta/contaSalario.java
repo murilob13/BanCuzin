@@ -1,6 +1,6 @@
-package Conta;
+package conta;
 
-import Cliente.Cliente;
+import cliente.Cliente;
 
 public class contaSalario extends Conta {
 	

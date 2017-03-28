@@ -1,9 +1,9 @@
-package Finan;
+package finan;
 
 import java.util.Date;
 
-import Cliente.Cliente;
-import Conta.Conta;
+import cliente.Cliente;
+import conta.Conta;
 
 public class CartaoDeCredito {
 	

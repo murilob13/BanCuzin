@@ -1,18 +1,12 @@
-package Agencia;
-
-import java.util.Scanner;
+package agencia;
 
 
 public class Agencia {
-	
-	Scanner input = new Scanner(System.in);
 	
 	String nome;
 	int codigo;
 	String endereco;
 	String gerente;
-	
-	Agencia agencia = new Agencia();
 	
 	public String getNome() {
 		return nome;
@@ -38,24 +32,5 @@ public class Agencia {
 	public void setGerente(String gerente) {
 		this.gerente = gerente;
 	}
-	
-	public Agencia cadastrarAgencia (String nome, int codigo, String endereco, String gerente){
-		
-		System.out.println("Digite os dados da agencia:");
-		System.out.print("Nome: ");
-		nome = input.nextLine();
-		
-		System.out.print("Codigo: ");
-		codigo = input.nextInt();
-		
-		System.out.print("Endereco: ");
-		endereco = input.nextLine();
-		
-		System.out.print("Gerente: ");
-		gerente = input.nextLine();
-		
-		return agencia;
-	}
-	
 	
 }

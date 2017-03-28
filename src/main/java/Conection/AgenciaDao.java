@@ -1,23 +1,26 @@
-package Conection;
+package conection;
 
 
-import java.awt.List;
+import java.util.List;
 
-import Agencia.Agencia;
+import agencia.Agencia;
+
+import java.sql.SQLException;
 
 public interface AgenciaDao {
 	
 	Agencia cadastrarAgencia (Agencia agencia) throws Exception;
 	
-	Agencia encontrarPeloNome (String nome);
+	Agencia criarTabelaAgencia() throws Exception;
 	
-	Agencia encontrarPeloCodigo (int codigo);
+	Agencia encontrarPeloNome (String nome) throws SQLException;
 	
-	Agencia atualizarAgencia (int tBusca);
+	Agencia encontrarPeloCodigo (int codigo) throws SQLException;
 	
-	Agencia removerAgencia (Agencia agencia);
+	Agencia atualizarAgencia (int codigo) throws SQLException;
 	
-	List listarTods();
+	Agencia removerAgencia (Agencia agencia) throws SQLException;
 	
-
+	List <Agencia> listarTodasAgencias() throws SQLException;
+	
 }

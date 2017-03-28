@@ -1,36 +1,36 @@
-package Conection;
+package conection;
 
-import java.awt.List;
+import java.util.List;
+
+import agencia.Agencia;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Scanner;
-
-import Agencia.Agencia;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class AgenciaDaoJdbcImpl implements AgenciaDao {
 
-	static CarregarDados dadosDeAcesso = new CarregarDados();
-	static Scanner input = new Scanner(System.in);
+	CarregarDados dadosDeAcesso = new CarregarDados();
 
-	public static Connection getConnection() throws Exception {
+	public Connection getConnection() throws Exception {
+
 		dadosDeAcesso.dadosDeAcesso();
 		Connection connection = null;
 
 		try {
 			connection = DriverManager.getConnection(dadosDeAcesso.url, dadosDeAcesso.usuario, dadosDeAcesso.senha);
-			if (connection != null) {
-				// System.out.println("Conexão com o banco estabeleida!");
-			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Falha ao conectar no banco" + e);
 		}
 
 		return connection;
 	}
 
-	public static void criarTabelaAgencia() throws Exception {
+	@Override
+	public Agencia criarTabelaAgencia() throws Exception {
 
 		String querry = "CREATE TABLE IF NOT EXISTS agencia (nome varchar(255) NOT NULL, codigo int NOT NULL, endereco varchar(255) NOT NULL, gerente varchar(255) NOT NULL, PRIMARY KEY(codigo));";
 
@@ -47,227 +47,240 @@ public class AgenciaDaoJdbcImpl implements AgenciaDao {
 			System.out.println("Tabela agencia criada com sucesso!");
 		}
 
+		return null;
 	}
 
-	public static void cadastrarAgencia() throws Exception {
+	@Override
+	public Agencia cadastrarAgencia(Agencia agencia) throws Exception {
 
-		String nome = null;
-		int codigo;
-		String endereco;
-		String gerente;
-
+		Connection connection = null;
+		PreparedStatement inserir = null;
 		String query = "INSERT INTO agencia" + " (nome, codigo, endereco, gerente) VALUES" + "(?,?,?,?)";
 
 		try {
-			Connection connection = getConnection();
-			PreparedStatement inserir = connection.prepareStatement(query);
 
-			System.out.println("Digite os dados da nova agencia:");
+			connection = getConnection();
+			inserir = connection.prepareStatement(query);
 
-			System.out.println("Nome: ");
-			nome = input.nextLine();
-			inserir.setString(1, nome);
+			// Insere nome da agencia
+			inserir.setString(1, agencia.getNome());
 
-			System.out.println("Endereco: ");
-			endereco = input.nextLine();
-			inserir.setString(3, endereco);
+			// Insere codigo da agencia
+			inserir.setInt(2, agencia.getCodigo());
 
-			System.out.println("Gerente: ");
-			gerente = input.nextLine();
-			inserir.setString(4, gerente);
+			// Insere endereco da agencia
+			inserir.setString(3, agencia.getEndereco());
 
-			System.out.println("Codigo: ");
-			codigo = input.nextInt();
-			inserir.setInt(2, codigo);
+			// Insere gerente da agencia
+			inserir.setString(4, agencia.getGerente());
 
 			inserir.executeUpdate();
 
 		} catch (Exception e) {
 			System.out.println(e);
 		} finally {
-			System.out.println("Agencia " + nome + " criada com sucesso!");
-		}
+			if (inserir != null) {
+				inserir.close();
+			}
 
+			if (connection != null) {
+				connection.close();
+			}
+
+		}
+		return agencia;
 	}
 
-	public Agencia encontrarPeloNome(String nomeParaBuscar) {
+	@Override
+	public Agencia encontrarPeloNome(String nomeParaBuscar) throws SQLException {
 
+		Agencia agencia = new Agencia();
+		Connection connection = null;
+		PreparedStatement select = null;
 		String query = "SELECT * from agencia WHERE nome = ?";
 
 		try {
 
-			Connection connection = getConnection();
-			PreparedStatement select = connection.prepareStatement(query);
+			connection = getConnection();
+			select = connection.prepareStatement(query);
 
 			select.setString(1, nomeParaBuscar);
 
 			ResultSet rs = select.executeQuery();
 
 			while (rs.next()) {
-				String nome = rs.getString("nome");
-				int codigo = rs.getInt("codigo");
-				String endereco = rs.getString("endereco");
-				String gerente = rs.getString("gerente");
 
-				System.out.println("Dados da agencia buscada: ");
-				System.out.println("Nome: " + nome);
-				System.out.println("Codigo: " + codigo);
-				System.out.println("Endereco: " + endereco);
-				System.out.println("Gerente: " + gerente);
+				agencia.setNome(rs.getString("nome"));
+				agencia.setCodigo(rs.getInt("codigo"));
+				agencia.setEndereco(rs.getString("endereco"));
+				agencia.setGerente(rs.getString("gerente"));
 			}
 
 		} catch (Exception e) {
 			System.out.println(e);
+		} finally {
+			if (select != null) {
+				select.close();
+			}
+
+			if (connection != null) {
+				connection.close();
+			}
 		}
 
-		return null;
+		return agencia;
 	}
 
-	public Agencia encontrarPeloCodigo(int codigoParaBusca) {
+	@Override
+	public Agencia encontrarPeloCodigo(int codigoParaBusca) throws SQLException {
 
+		Agencia agencia = new Agencia();
+		Connection connection = null;
+		PreparedStatement select = null;
 		String query = "SELECT * from agencia WHERE codigo = ?";
 
 		try {
 
-			Connection connection = getConnection();
-			PreparedStatement select = connection.prepareStatement(query);
+			connection = getConnection();
+			select = connection.prepareStatement(query);
 
 			select.setInt(1, codigoParaBusca);
 
 			ResultSet rs = select.executeQuery();
 
 			while (rs.next()) {
-				String nome = rs.getString("nome");
-				int codigo = rs.getInt("codigo");
-				String endereco = rs.getString("endereco");
-				String gerente = rs.getString("gerente");
-
-				System.out.println("Dados da agencia buscada: ");
-				System.out.println("Nome: " + nome);
-				System.out.println("Codigo: " + codigo);
-				System.out.println("Endereco: " + endereco);
-				System.out.println("Gerente: " + gerente);
+				agencia.setNome(rs.getString("nome"));
+				agencia.setCodigo(rs.getInt("codigo"));
+				agencia.setEndereco(rs.getString("endereco"));
+				agencia.setGerente(rs.getString("gerente"));
 			}
 
 		} catch (Exception e) {
 			System.out.println(e);
-		}
-
-		return null;
-	}
-
-	public Agencia atualizarAgencia(int tBusca) {
-
-		String queryNome = "UPDATE agencia SET nome = ?, codigo = ?, endereco = ?, gerente = ? WHERE nome = ?";
-		String queryCod = "UPDATE agencia SET nome = ?, codigo = ?, endereco = ?, gerente = ? WHERE codigo = ?";
-
-		String nome = null;
-		int codigo;
-		String endereco;
-		String gerente;
-		String nomeParaBuscar;
-		int codigoParaBusca;
-
-		switch (tBusca) {
-		case 1:
-
-			System.out.println("Digite o nome que deseja atualizar os dados:");
-			nomeParaBuscar = input.nextLine();
-			try {
-
-				Connection connection = getConnection();
-				PreparedStatement update = connection.prepareStatement(queryNome);
-
-				System.out.println("Digite os dados atualizados:");
-
-				System.out.println("Nome: ");
-				nome = input.nextLine();
-				update.setString(1, nome);
-
-				System.out.println("Endereco: ");
-				endereco = input.nextLine();
-				update.setString(3, endereco);
-
-				System.out.println("Gerente: ");
-				gerente = input.nextLine();
-				update.setString(4, gerente);
-
-				System.out.println("Codigo: ");
-				codigo = input.nextInt();
-				update.setInt(2, codigo);
-
-				update.setString(5, nomeParaBuscar);
-
-				update.executeUpdate();
-
-			} catch (Exception e) {
-				System.out.println(e);
-			} finally {
-				System.out.println("Dados atualziados com sucesso!");
+		} finally {
+			if (select != null) {
+				select.close();
 			}
 
-			break;
-
-		case 2:
-			System.out.println("Digite o codigio que deseja atualziar os dados:");
-			codigoParaBusca = input.nextInt();
-			try {
-
-				Connection connection = getConnection();
-				PreparedStatement update = connection.prepareStatement(queryCod);
-
-				System.out.println("Digite os dados atualizados:");
-
-				System.out.println("Nome: ");
-				nome = input.nextLine();
-				update.setString(1, nome);
-
-				System.out.println("Endereco: ");
-				endereco = input.nextLine();
-				update.setString(3, endereco);
-
-				System.out.println("Gerente: ");
-				gerente = input.nextLine();
-				update.setString(4, gerente);
-
-				System.out.println("Codigo: ");
-				codigo = input.nextInt();
-				update.setInt(2, codigo);
-
-				update.setInt(5, codigoParaBusca);
-
-				update.executeUpdate();
-
-			} catch (Exception e) {
-				System.out.println(e);
-			} finally {
-				System.out.println("Dados atualziados com sucesso!");
+			if (connection != null) {
+				connection.close();
 			}
-
-			break;
-
-		default:
-
-			System.out.println("Digite uma opcao valida, 1 para buscar pelo nome 2 para buscar pelo codigo.");
-			break;
 		}
 
-		return null;
+		return agencia;
 	}
 
-	public Agencia cadastrarAgencia(Agencia agencia) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	@Override
+	public Agencia atualizarAgencia(int codigo) throws SQLException {
+
+		Agencia agencia = new Agencia();
+		Connection connection = null;
+		PreparedStatement update = null;
+		String query = "UPDATE agencia SET nome = ?, codigo = ?, endereco = ?, gerente = ? WHERE codigo = ?";
+
+		try {
+
+			connection = getConnection();
+			update = connection.prepareStatement(query);
+
+			// Update nome
+			update.setString(1, agencia.getNome());
+
+			// Update codigo
+			update.setInt(2, agencia.getCodigo());
+
+			// Update endereco
+			update.setString(3, agencia.getEndereco());
+
+			// Update gerente
+			update.setString(4, agencia.getGerente());
+
+			update.setInt(5, codigo);
+
+			update.executeUpdate();
+
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			if (update != null) {
+				update.close();
+			}
+
+			if (connection != null) {
+				connection.close();
+			}
+		}
+
+		return agencia;
+
 	}
 
-	public List listarTods() {
-		// TODO Auto-generated method stub
-		return null;
+	@Override
+	public Agencia removerAgencia(Agencia agencia) throws SQLException {
+
+		String query = "DELETE agencia WHERE codigo = ?";
+
+		Connection connection = null;
+		PreparedStatement delete = null;
+
+		try {
+			connection = getConnection();
+			delete = connection.prepareStatement(query);
+
+			delete.setInt(1, agencia.getCodigo());
+
+			delete.executeUpdate();
+
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			if (delete != null) {
+				delete.close();
+			}
+
+			if (connection != null) {
+				connection.close();
+			}
+		}
+
+		return agencia;
 	}
 
-	public Agencia removerAgencia(Agencia agencia) {
-		// TODO Auto-generated method stub
-		return null;
+	@Override
+	public List<Agencia> listarTodasAgencias() throws SQLException {
+
+		String query = "SELECT * FROM agencia";
+		Connection connection = null;
+		PreparedStatement list = null;
+
+		try {
+
+			List<Agencia> agencias = new ArrayList<Agencia>();
+			connection = getConnection();
+			list = connection.prepareStatement(query);
+
+			ResultSet rs = list.executeQuery();
+
+			while (rs.next()) {
+				Agencia agencia = new Agencia();
+				agencia.setNome(rs.getString("nome"));
+				agencia.setCodigo(rs.getInt("codigo"));
+				agencia.setEndereco(rs.getString("endereco"));
+				agencia.setGerente(rs.getString("gerente"));
+
+				agencias.add(agencia);
+			}
+			return agencias;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (list != null) {
+				list.close();
+			}
+			if (connection != null) {
+				connection.close();
+			}
+		}
 	}
 
 }

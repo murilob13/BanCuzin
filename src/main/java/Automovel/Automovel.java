@@ -1,4 +1,4 @@
-package Automovel;
+package automovel;
 
 import java.util.Date;
 

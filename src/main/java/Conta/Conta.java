@@ -1,8 +1,8 @@
-package Conta;
+package conta;
 
 import java.util.Scanner;
 
-import Cliente.Cliente;
+import cliente.Cliente;
 
 public abstract class Conta implements ContaInterface{
 

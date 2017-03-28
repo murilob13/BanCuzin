@@ -1,6 +1,6 @@
-package Finan;
+package finan;
 
-import Cliente.Cliente;
+import cliente.Cliente;
 
 public class Financiamento {
 	

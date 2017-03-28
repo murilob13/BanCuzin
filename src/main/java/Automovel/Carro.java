@@ -1,4 +1,4 @@
-package Automovel;
+package automovel;
 
 public class Carro extends Automovel {
 	

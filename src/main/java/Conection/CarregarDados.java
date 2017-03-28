@@ -1,4 +1,4 @@
-package Conection;
+package conection;
 
 import java.io.FileInputStream;
 import java.io.InputStream;

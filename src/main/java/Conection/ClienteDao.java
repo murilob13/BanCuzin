@@ -1,8 +1,8 @@
-package Conection;
+package conection;
 
 import java.awt.List;
 
-import Cliente.Cliente;
+import cliente.Cliente;
 
 
 public interface ClienteDao {

@@ -1,6 +1,6 @@
-package Conection;
+package conection;
 
-import Cliente.Cliente;
+import cliente.Cliente;
 
 public class ClienteDaoJdbcImpl implements ClienteDao {
 
