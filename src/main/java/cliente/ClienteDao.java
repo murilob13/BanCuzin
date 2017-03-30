@@ -1,8 +1,6 @@
-package conection;
+package cliente;
 
-import java.awt.List;
-
-import cliente.Cliente;
+import java.util.List;
 
 
 public interface ClienteDao {
@@ -13,7 +11,7 @@ public interface ClienteDao {
 	
 	Cliente atualizarCliente (Cliente cliente);
 	
-	//List<Cliente> listarTodos();
+	List<Cliente> listarTodos();
 	
 	boolean removerCliente (Cliente cliente);
 

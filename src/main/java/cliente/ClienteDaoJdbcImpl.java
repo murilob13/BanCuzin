@@ -1,6 +1,6 @@
-package conection;
+package cliente;
 
-import cliente.Cliente;
+import java.util.List;
 
 public class ClienteDaoJdbcImpl implements ClienteDao {
 
@@ -22,6 +22,11 @@ public class ClienteDaoJdbcImpl implements ClienteDao {
 	public boolean removerCliente(Cliente cliente) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public List<Cliente> listarTodos() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

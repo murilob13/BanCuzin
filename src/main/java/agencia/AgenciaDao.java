@@ -1,15 +1,13 @@
-package conection;
-
-
-import java.util.List;
-
-import agencia.Agencia;
+package agencia;
 
 import java.sql.SQLException;
+import java.util.List;
+
+import exception.FalhaInsercaoException;
 
 public interface AgenciaDao {
 	
-	Agencia cadastrarAgencia (Agencia agencia) throws Exception;
+	Agencia cadastrarAgencia (Agencia agencia) throws FalhaInsercaoException;
 	
 	Agencia criarTabelaAgencia() throws Exception;
 	

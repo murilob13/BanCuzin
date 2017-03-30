@@ -1,15 +1,9 @@
 package BanCuzin.BanCuzin;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Scanner;
 
-import org.junit.Test;
-
 import agencia.Agencia;
-import conection.AgenciaDao;
-import conection.AgenciaDaoJdbcImpl;
-import conection.CarregarDados;
+import agencia.AgenciaDaoJdbcImpl;
 
 public class App {
 
