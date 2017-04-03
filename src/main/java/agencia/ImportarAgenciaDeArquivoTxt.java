@@ -19,6 +19,7 @@ public class ImportarAgenciaDeArquivoTxt {
 			String line = null;
 			String[]vetorAgencia = null;
 			
+			//Ira ler o arquivo em loop linha por linha e adicionar no banco
 			while(true) {
 				line = bReader.readLine(); 
 				if(line == null) {
