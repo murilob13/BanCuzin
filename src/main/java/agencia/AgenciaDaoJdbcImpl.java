@@ -11,41 +11,40 @@ import org.apache.commons.dbutils.DbUtils;
 
 import connection.Conexao;
 import exception.FalhaInsercaoException;
+//import exception.FalhaInsercaoException;
 
 public class AgenciaDaoJdbcImpl implements AgenciaDao {
 
+	public void criarTabelaAgencia() throws Exception {
 
-	public Agencia criarTabelaAgencia() throws Exception {
-
-		String querry = "CREATE TABLE IF NOT EXISTS agencia (nome varchar(255) NOT NULL, codigo int NOT NULL, endereco varchar(255) NOT NULL, gerente varchar(255) NOT NULL, PRIMARY KEY(codigo));";
+		String query = "CREATE TABLE IF NOT EXISTS agencia (idAgencia SERIAL NOT NULL PRIMARY KEY, nome varchar(255) NOT NULL, codigo int NOT NULL UNIQUE, endereco varchar(255) NOT NULL, gerente varchar(255) NOT NULL);";
 
 		try {
-			
+
 			Connection connection = Conexao.getConnection();
 
-			PreparedStatement psCreate = connection.prepareStatement(querry);
+			PreparedStatement psCreate = connection.prepareStatement(query);
 			psCreate.executeUpdate();
+			System.out.println("Tabela agencia criada com sucesso!");
 
 		} catch (Exception e) {
 			System.err.println(e);
-		} finally {
-			System.out.println("Tabela agencia criada com sucesso!");
 		}
 
-		return null;
 	}
 
 	public Agencia cadastrarAgencia(Agencia agencia) throws FalhaInsercaoException {
 
 		Connection connection = null;
 		PreparedStatement psInserir = null;
-		String query = "INSERT INTO agencia" + " (nome, codigo, endereco, gerente) VALUES" + "(?,?,?,?)";
+		String query = "INSERT INTO agencia (nome, codigo, endereco, gerente) VALUES (?,?,?,?)";
 
 		try {
 
 			connection = Conexao.getConnection();
-			
+
 			psInserir = connection.prepareStatement(query);
+
 			psInserir.setString(1, agencia.getNome());
 			psInserir.setInt(2, agencia.getCodigo());
 			psInserir.setString(3, agencia.getEndereco());
@@ -54,7 +53,9 @@ public class AgenciaDaoJdbcImpl implements AgenciaDao {
 			psInserir.executeUpdate();
 
 		} catch (SQLException e) {
-			System.err.println(e);
+			System.err.println("Deu penis na hora de inserir a agencia" + e);
+			e.printStackTrace();
+			throw new FalhaInsercaoException(e);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -119,7 +120,7 @@ public class AgenciaDaoJdbcImpl implements AgenciaDao {
 			}
 
 		} catch (Exception e) {
-			System.out.println(e);
+			System.err.println(e);
 		} finally {
 			DbUtils.closeQuietly(psSelect);
 		}
@@ -127,9 +128,8 @@ public class AgenciaDaoJdbcImpl implements AgenciaDao {
 		return agencia;
 	}
 
-	public Agencia atualizarAgencia(int codigo) throws SQLException {
+	public Agencia atualizarAgencia(int codigo, Agencia agencia) throws SQLException {
 
-		Agencia agencia = new Agencia();
 		Connection connection = null;
 		PreparedStatement psUpdate = null;
 		String query = "UPDATE agencia SET nome = ?, codigo = ?, endereco = ?, gerente = ? WHERE codigo = ?";
@@ -145,20 +145,20 @@ public class AgenciaDaoJdbcImpl implements AgenciaDao {
 			psUpdate.setInt(5, codigo);
 
 			psUpdate.executeUpdate();
+			return agencia;
 
 		} catch (Exception e) {
 			System.out.println(e);
+			return null;
 		} finally {
 			DbUtils.closeQuietly(psUpdate);
 		}
 
-		return agencia;
-
 	}
-
+	
 	public Agencia removerAgencia(Agencia agencia) throws SQLException {
 
-		String query = "DELETE agencia WHERE codigo = ?";
+		String query = "DELETE FROM agencia WHERE codigo = ?";
 
 		Connection connection = null;
 		PreparedStatement psDelete = null;
@@ -179,10 +179,10 @@ public class AgenciaDaoJdbcImpl implements AgenciaDao {
 
 		return agencia;
 	}
-
+	
 	public List<Agencia> listarTodasAgencias() throws SQLException {
 
-		String query = "SELECT * FROM agencia";
+		String query = "SELECT * FROM agencia ORDER by nome";
 		Connection connection = null;
 		PreparedStatement psList = null;
 

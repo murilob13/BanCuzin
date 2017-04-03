@@ -1,18 +1,25 @@
 package cliente;
 
+import java.sql.SQLException;
 import java.util.List;
+
 
 
 public interface ClienteDao {
 	
-	Cliente criarCliente (String nome, String sobrenome);
+	public void criarTabelaCliente () throws SQLException; 
 	
-	Cliente encontrarPeloNome (String nome);
+	Cliente cadastrarCliente (Cliente cliente) throws SQLException;
 	
-	Cliente atualizarCliente (Cliente cliente);
+	Cliente encontrarPeloNome (String nomeParaBuscar) throws SQLException;
 	
-	List<Cliente> listarTodos();
+	Cliente encontrarPeloCpfCnpj (String cpfCnpjParaBuscar) throws SQLException;
 	
-	boolean removerCliente (Cliente cliente);
+	Cliente atualizarCliente (String cpfCnpj, Cliente cliente) throws SQLException;
+	
+	Cliente removerCliente (Cliente cliente) throws SQLException;
+	
+	List<Cliente> listarTodosClientes() throws SQLException;
+	
 
 }
