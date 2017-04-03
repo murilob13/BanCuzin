@@ -42,4 +42,14 @@ public class Agencia {
 		this.gerente = gerente;
 	}
 	
+	public Agencia(int idAgencia, String nome, int codigo, String endereco, String gerente) {
+		this.idAgencia = idAgencia;
+		this.nome = nome;
+		this.codigo = codigo;
+		this.endereco = endereco;
+		this.gerente = gerente;
+	}
+	public Agencia() {
+		// TODO Auto-generated constructor stub
+	}
 }
