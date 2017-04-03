@@ -3,10 +3,19 @@ package agencia;
 
 public class Agencia {
 	
-	String nome;
-	int codigo;
-	String endereco;
-	String gerente;
+	private int idAgencia;
+	private String nome;
+	private int codigo;
+	private String endereco;
+	private String gerente;
+	
+	
+	public int getIdAgencia() {
+		return idAgencia;
+	}
+	public void setIdAgencia(int idAgencia) {
+		this.idAgencia = idAgencia;
+	}
 	
 	public String getNome() {
 		return nome;

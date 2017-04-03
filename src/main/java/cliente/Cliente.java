@@ -1,55 +1,50 @@
 package cliente;
 
-import endereco.Endereco;
+import java.sql.Date;
 
 public class Cliente {
 	
-		protected int idClient;
-		protected String nome;
-		protected Endereco endereco;
-		protected String dataCadastro;
-		protected String cpf;
-		protected String telefone;
+		private String nome;
+		private String endereco;
+		private String cpfCnpj;
+		private Date birthDay;
+		private String sexo;
 		
 		
-		public int getIdClient() {
-			return idClient;
-		}
-		public void setIdClient(int idClient) {
-			this.idClient = idClient;
-		}
 		public String getNome() {
 			return nome;
 		}
 		public void setNome(String nome) {
 			this.nome = nome;
 		}
-		public Endereco getEndereco() {
+		
+		public String getEndereco() {
 			return endereco;
 		}
-		public void setEndereco(Endereco endereco) {
+		public void setEndereco(String endereco) {
 			this.endereco = endereco;
 		}
-		public String getDataCadastro() {
-			return dataCadastro;
+		
+		public String getCpfCnpj() {
+			return cpfCnpj;
 		}
-		public void setDataCadastro(String dataCadastro) {
-			this.dataCadastro = dataCadastro;
+		public void setCpfCnpj(String cpfCnpj) {
+			this.cpfCnpj = cpfCnpj;
 		}
-		public String getCpf() {
-			return cpf;
+		
+		public Date getBirthDay() {
+			return birthDay;
 		}
-		public void setCpf(String cpf) {
-			this.cpf = cpf;
+		public void setBirthDay(Date birthDay) {
+			this.birthDay = birthDay;
 		}
-		public String getTelefone() {
-			return telefone;
+		
+		public String getSexo() {
+			return sexo;
 		}
-		public void SetTelefone(String telefone) throws Exception {
-	        if(telefone.length() <8) 
-	        	throw new Exception("Telefone não pode ser menor que 8 digitos");
-	        this.telefone = telefone;
-	    }	    
-	    
-	   
+		public void setSexo(String sexo) {
+			this.sexo = sexo;
+		}
+	
+
 }
