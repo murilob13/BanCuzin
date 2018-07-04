@@ -12,7 +12,14 @@ import org.apache.commons.dbutils.DbUtils;
 import connection.Conexao;
 import exception.FalhaInsercaoException;
 //import exception.FalhaInsercaoException;
-
+/**
+ * 
+ * @author Marcos
+ * @author Murilo
+ * 
+ * @param criarTabelaAgencia reponsavel por criar a tabela agencia se ja nao existir.
+ *
+ */
 public class AgenciaDaoJdbcImpl implements AgenciaDao {
 
 	public void criarTabelaAgencia() throws Exception {
@@ -25,7 +32,6 @@ public class AgenciaDaoJdbcImpl implements AgenciaDao {
 
 			PreparedStatement psCreate = connection.prepareStatement(query);
 			psCreate.executeUpdate();
-			System.out.println("Tabela agencia criada com sucesso!");
 
 		} catch (Exception e) {
 			System.err.println(e);
@@ -53,7 +59,7 @@ public class AgenciaDaoJdbcImpl implements AgenciaDao {
 			psInserir.executeUpdate();
 
 		} catch (SQLException e) {
-			System.err.println("Deu penis na hora de inserir a agencia" + e);
+			System.err.println("Deu ruim na hora de inserir a agencia" + e);
 			e.printStackTrace();
 			throw new FalhaInsercaoException(e);
 		} catch (Exception e) {
@@ -113,6 +119,7 @@ public class AgenciaDaoJdbcImpl implements AgenciaDao {
 			ResultSet rs = psSelect.executeQuery();
 
 			while (rs.next()) {
+				agencia.setIdAgencia(rs.getInt("idagencia"));
 				agencia.setNome(rs.getString("nome"));
 				agencia.setCodigo(rs.getInt("codigo"));
 				agencia.setEndereco(rs.getString("endereco"));
@@ -142,11 +149,10 @@ public class AgenciaDaoJdbcImpl implements AgenciaDao {
 			psUpdate.setInt(2, agencia.getCodigo());
 			psUpdate.setString(3, agencia.getEndereco());
 			psUpdate.setString(4, agencia.getGerente());
-			psUpdate.setInt(5, codigo);
 
+			psUpdate.setInt(5, codigo);
 			psUpdate.executeUpdate();
 			return agencia;
-
 		} catch (Exception e) {
 			System.out.println(e);
 			return null;
@@ -155,7 +161,7 @@ public class AgenciaDaoJdbcImpl implements AgenciaDao {
 		}
 
 	}
-	
+
 	public Agencia removerAgencia(Agencia agencia) throws SQLException {
 
 		String query = "DELETE FROM agencia WHERE codigo = ?";
@@ -179,7 +185,7 @@ public class AgenciaDaoJdbcImpl implements AgenciaDao {
 
 		return agencia;
 	}
-	
+
 	public List<Agencia> listarTodasAgencias() throws SQLException {
 
 		String query = "SELECT * FROM agencia ORDER by nome";
@@ -210,6 +216,39 @@ public class AgenciaDaoJdbcImpl implements AgenciaDao {
 		} finally {
 			DbUtils.closeQuietly(psList);
 		}
+	}
+
+	@Override
+	public Agencia encontrarPeloId(int idAgencia) throws SQLException {
+
+		Agencia agencia = new Agencia();
+		Connection connection = null;
+		PreparedStatement psSelect = null;
+		String query = "SELECT * from agencia WHERE idagencia = ?";
+
+		try {
+			connection = Conexao.getConnection();
+			psSelect = connection.prepareStatement(query);
+
+			psSelect.setInt(1, idAgencia);
+
+			ResultSet rs = psSelect.executeQuery();
+
+			while (rs.next()) {
+				agencia.setIdAgencia(rs.getInt("idagencia"));
+				agencia.setNome(rs.getString("nome"));
+				agencia.setCodigo(rs.getInt("codigo"));
+				agencia.setEndereco(rs.getString("endereco"));
+				agencia.setGerente(rs.getString("gerente"));
+			}
+			return agencia;
+		} catch (Exception e) {
+			System.err.println(e);
+			return null;
+		} finally {
+			DbUtils.closeQuietly(psSelect);
+		}
+
 	}
 
 }

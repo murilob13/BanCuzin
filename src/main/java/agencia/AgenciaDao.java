@@ -6,12 +6,21 @@ import java.util.List;
 import exception.FalhaInsercaoException;
 
 //import exception.FalhaInsercaoException;
-
+/**
+ * 
+ * @author Marcos
+ * @author Murilo
+ * 
+ * Interface da AgenciaDaoJdbcImpl
+ *
+ */
 public interface AgenciaDao {
 	
 	public void criarTabelaAgencia() throws Exception;
 	
 	Agencia cadastrarAgencia (Agencia agencia) throws FalhaInsercaoException;
+	
+	Agencia encontrarPeloId (int idAgencia) throws SQLException;
 	
 	Agencia encontrarPeloNome (String nome) throws SQLException;
 	

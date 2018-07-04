@@ -1,47 +1,74 @@
 package conta;
 
-import java.util.Scanner;
-
+import agencia.Agencia;
 import cliente.Cliente;
 
-public abstract class Conta implements ContaInterface{
+public class Conta {
 
 	protected int idConta;
-    protected int numeroConta;
-    protected int numeroAgencia;
-    protected Cliente cliente;
-    protected double saldo;
-    protected double limite;
-    
-    Scanner input = new Scanner(System.in);
-    
-    public Conta (Cliente client, double saldo){
-    	this.cliente = client;
-    	this.saldo = saldo;
-    }
-    
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
-    }
-
-    public double getSaldo() {
-        return this.saldo;
-    }
-    
-    public int getNumeroConta() {
-		return numeroConta;
+	protected Agencia agencia = new Agencia();
+	protected String numConta;
+	protected Cliente cliente = new Cliente();
+	protected TipoConta tipoConta;
+	protected Plano plano;
+	protected double saldo;
+	protected double limite;
+	
+	
+	public int getIdConta() {
+		return idConta;
 	}
 
-	public void setNumeroConta(int numeroConta) {
-		this.numeroConta = numeroConta;
+	public void setIdConta(int idConta) {
+		this.idConta = idConta;
 	}
 
-	public int getNumeroAgencia() {
-		return numeroAgencia;
+	public Agencia getAgencia() {
+		return agencia;
 	}
 
-	public void setNumeroAgencia(int numeroAgencia) {
-		this.numeroAgencia = numeroAgencia;
+	public void setAgencia(Agencia agencia) {
+		this.agencia = agencia;
+	}
+
+	public String getNumConta() {
+		return numConta;
+	}
+
+	public void setNumConta(String numConta) {
+		this.numConta = numConta;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public TipoConta getTipoConta() {
+		return tipoConta;
+	}
+
+	public void setTipoConta(TipoConta tipoConta) {
+		this.tipoConta = tipoConta;
+	}
+
+	public Plano getPlano() {
+		return plano;
+	}
+
+	public void setPlano(Plano plano) {
+		this.plano = plano;
+	}
+
+	public double getSaldo() {
+		return saldo;
+	}
+
+	public void setSaldo(double saldo) {
+		this.saldo = saldo;
 	}
 
 	public double getLimite() {
@@ -52,20 +79,32 @@ public abstract class Conta implements ContaInterface{
 		this.limite = limite;
 	}
 
-	public void sacar(double valorSaque) {
-           while (this.saldo-valorSaque< 0) {
-            System.out.println("Saldo invalido! Digite o valor de saque novamente");
-            valorSaque = input.nextDouble();
-        }
-            this.saldo-=valorSaque;
-          }
-    
-    public void depositar(double valorDeposito) {
-         this.saldo += valorDeposito;
-    }
-
-	public void manutencao(double valor) {
-		
+	public Conta(int idConta, Agencia agencia, String numConta, Cliente cliente, TipoConta tipoConta, Plano plano,
+			double saldo, double limite) {
+		super();
+		this.idConta = idConta;
+		this.agencia = agencia;
+		this.numConta = numConta;
+		this.cliente = cliente;
+		this.tipoConta = tipoConta;
+		this.plano = plano;
+		this.saldo = saldo;
+		this.limite = limite;
 	}
-	
+
+	public Conta() {
+		super();
+	}
+
+	@Override
+	public String toString() {
+		return  "Numero da Agencia: "+agencia.getCodigo()+"\n"+
+				"Numero da Conta: "+numConta+"\n"+
+				"Nome do Cliente: "+cliente.getNome()+"\n"+
+				"Tipo da Conta: "+tipoConta.getDescricao()+"\n"+
+				"Tipo do Plano: "+plano.getDescricao()+"\n"+
+				"Saldo: "+saldo+"\n"+
+				"Limite: "+limite+"\n";
+	}
+
 }

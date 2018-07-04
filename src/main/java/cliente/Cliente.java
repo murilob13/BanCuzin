@@ -1,16 +1,23 @@
 package cliente;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Cliente {
 	
+		private int idCliente;
 		private String nome;
-		private String endereco;
 		private String cpfCnpj;
+		private String endereco;
 		private Date birthDay;
 		private String sexo;
 		
 		
+		public int getIdCliente() {
+			return idCliente;
+		}
+		public void setIdCliente(int idCliente) {
+			this.idCliente = idCliente;
+		}
 		public String getNome() {
 			return nome;
 		}
@@ -45,6 +52,25 @@ public class Cliente {
 		public void setSexo(String sexo) {
 			this.sexo = sexo;
 		}
-	
+		
+		public Cliente(int idCliente, String nome, String cpfCnpj, String endereco, Date birthDay, String sexo) {
+			super();
+			this.idCliente = idCliente;
+			this.nome = nome;
+			this.cpfCnpj = cpfCnpj;
+			this.endereco = endereco;
+			this.birthDay = birthDay;
+			this.sexo = sexo;
+		}
+		public Cliente() {
+			super();
+		}
+		@Override
+		public String toString() {
+			return "Nome = " + nome + "\n" + "CPF/CNPJ= " + cpfCnpj + "\n" + "Endereco= "
+					+ endereco + "\n" + "Data de Nascimento= " + birthDay + "\n" + "Sexo = " + sexo + "";
+		}
+
+		
 
 }

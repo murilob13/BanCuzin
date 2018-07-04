@@ -2,40 +2,40 @@ package agencia;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
+//import java.util.List;
 
-import org.apache.commons.io.FileUtils;
+//import org.apache.commons.io.FileUtils;
 
 import connection.CarregarDados;
 
 public class ImportarAgencia {
 
-	public static void agenciaImporter(String caminho) throws IOException {
+	/**
+	 * Responsavel por instanciar as threads das agencias.
+	 * 
+	 * @param caminho local do arquivo de importacao das agencias
+	 * @throws IOException exeption lancada quando alguma falha de io
+	 * 
+	 */
+	
+	public static void agenciaImporter(String caminho) throws IOException, InterruptedException {
 		CarregarDados qndThread = new CarregarDados();
+		qndThread.carregarDadosDoProperties();
 
-		try {
-			File file = new File(caminho);
-			List<String> linhas = FileUtils.readLines(file, "UTF-8");
+		File file = new File(caminho);			
+		
+		/*ThreadAgencia thread = new ThreadAgencia(linhas, file);
+		thread.start();*/
 
-			 ThreadAgencia thread = new ThreadAgencia(linhas, file);
-			 thread.start();
-			
-			/*
-			ThreadAgencia thread[] = new ThreadAgencia[qndThread.qntThread];
+		ThreadAgencia thread[] = new ThreadAgencia[qndThread.qntThread];
 
-			// Criando e instanciando as threads
-			for (int i = 0; i < qndThread.qntThread; i++) {
-				 thread[i] = new ThreadAgencia(i);
-				 thread[i] = new ThreadAgencia(linhas, file);
-			}
-
-			// Disparando as threads
-			for (int i = 0; i < qndThread.qntThread; i++) {
-				thread[i].start();
-			}*/
-
-		} catch (IOException e) {
-			System.err.println(e);
+		// Criando e instanciando as threads
+		for (int i = 0; i < qndThread.qntThread; i++) {
+			thread[i] = new ThreadAgencia(file);
+		}
+		// Disparando as threads
+		for (int i = 0; i < qndThread.qntThread; i++) {
+			thread[i].join();
 		}
 	}
 

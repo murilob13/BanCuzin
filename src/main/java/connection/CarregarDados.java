@@ -7,11 +7,18 @@ import java.util.Properties;
 
 public class CarregarDados {
 	
+	/**
+	 * @author Marcos
+	 * 
+	 * Responsavel por carregar os dados do banco do arquivo properties.
+	 * 
+	 */
+	
 	public String url, usuario, senha;
 	public int qntThread;
 	
 		
-	public CarregarDados dadosDeAcesso() throws IOException {
+	public CarregarDados carregarDadosDoProperties() throws IOException {
 	
 		CarregarDados dadosDeAcesso = new CarregarDados();
 
@@ -27,8 +34,6 @@ public class CarregarDados {
 
 		return dadosDeAcesso;
 	
-	}
-
-		
+	}		
 	
 }

@@ -1,19 +1,27 @@
 package BanCuzin.BanCuzin;
 
-import agencia.ImportarAgencia;
+import javax.swing.JOptionPane;
+
+import agencia.AgenciaDaoJdbcImpl;
+import cliente.ClienteDaoJdbcImpl;
+import conta.ContaDaoJdbcImpl;
 import menu.Menu;
+
 
 
 public class App {
 
 	public static void main(String[] args) throws Exception {
+		AgenciaDaoJdbcImpl criarTabelaAgencia = new AgenciaDaoJdbcImpl();
+		criarTabelaAgencia.criarTabelaAgencia();
+		ClienteDaoJdbcImpl criarTabelaCleinte = new ClienteDaoJdbcImpl();
+		criarTabelaCleinte.criarTabelaCliente();
+		ContaDaoJdbcImpl criarTabelaConta = new ContaDaoJdbcImpl();
+		criarTabelaConta.criarTabelaConta();
 		
-		System.out.println("Olá, bem vindo ao BanCuzin!");
-		//Menu.MenuPrincipal();
 		
-		String caminho = "C:\\Users\\marco\\Dropbox\\OOBJ\\Curso Java\\BanCuzin\\agencia.txt";	
-		
-		ImportarAgencia.agenciaImporter(caminho);
+		JOptionPane.showMessageDialog(null,"Olá, bem vindo ao Bancoobj!");
+		Menu.MenuPrincipal();	
 		
 	}
 }

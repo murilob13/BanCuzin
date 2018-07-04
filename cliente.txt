@@ -1,0 +1,8 @@
+114;John Snow;66666666669;Night’s Watch - The Wall - Norte - Westeros;29/05/1970;M
+211;Ned Stark;01856634669;Rua do Norte, s/n Castelo de Winterfell - Norte - Westeros;03/01/1870;M
+133;Catelyn Stark;01856634125;Rua do Norte, s/n Castelo de Winterfell - Norte - Westeros;23/11/1876;F
+144;Tyrion Lannister;98766432101;Rua do Norte, s/n Lannister House - Westerland - Westeros;15/08/1890;M
+161;John Snow;66666666699;Night’s Watch - The Wall - Norte - Westeros;29/05/1970;M
+152;Ned Stark;01858434166;Rua do Norte, s/n Castelo de Winterfell - Norte - Westeros;03/01/1870;M
+123;Catelyn Stark;01858434125;Rua do Norte, s/n Castelo de Winterfell - Norte - Westeros;23/11/1876;F
+24;Tyrion Lannister;98765466101;Rua do Norte, s/n Lannister House - Westerland - Westeros;15/08/1890;M
